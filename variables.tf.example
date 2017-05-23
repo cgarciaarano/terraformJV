@@ -1,0 +1,14 @@
+variable "access_key" {
+	default = "xxxx"
+	}
+
+variable "secret_key" {
+	default = "xxxxxxxx"
+}
+  
+  
+variable "region" {
+    default = "eu-west-1"
+}
+
+

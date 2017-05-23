@@ -1,0 +1,52 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] aws_db_instance.default" [label = "aws_db_instance.default", shape = "box"]
+		"[root] aws_db_subnet_group.example" [label = "aws_db_subnet_group.example", shape = "box"]
+		"[root] aws_eip.ip" [label = "aws_eip.ip", shape = "box"]
+		"[root] aws_eip_association.eip_assoc" [label = "aws_eip_association.eip_assoc", shape = "box"]
+		"[root] aws_instance.example01" [label = "aws_instance.example01", shape = "box"]
+		"[root] aws_instance.example02" [label = "aws_instance.example02", shape = "box"]
+		"[root] aws_internet_gateway.gw" [label = "aws_internet_gateway.gw", shape = "box"]
+		"[root] aws_security_group.internal_inbound" [label = "aws_security_group.internal_inbound", shape = "box"]
+		"[root] aws_security_group.internal_inbound_mysql" [label = "aws_security_group.internal_inbound_mysql", shape = "box"]
+		"[root] aws_subnet.test01" [label = "aws_subnet.test01", shape = "box"]
+		"[root] aws_subnet.test01-rds" [label = "aws_subnet.test01-rds", shape = "box"]
+		"[root] aws_subnet.test02" [label = "aws_subnet.test02", shape = "box"]
+		"[root] aws_subnet.test02-rds" [label = "aws_subnet.test02-rds", shape = "box"]
+		"[root] aws_subnet.test03-rds" [label = "aws_subnet.test03-rds", shape = "box"]
+		"[root] aws_vpc.example" [label = "aws_vpc.example", shape = "box"]
+		"[root] data.aws_availability_zones.available" [label = "data.aws_availability_zones.available", shape = "box"]
+		"[root] provider.aws" [label = "provider.aws", shape = "diamond"]
+		"[root] aws_db_instance.default" -> "[root] aws_db_subnet_group.example"
+		"[root] aws_db_instance.default" -> "[root] aws_security_group.internal_inbound_mysql"
+		"[root] aws_db_subnet_group.example" -> "[root] aws_subnet.test01-rds"
+		"[root] aws_db_subnet_group.example" -> "[root] aws_subnet.test02-rds"
+		"[root] aws_db_subnet_group.example" -> "[root] aws_subnet.test03-rds"
+		"[root] aws_eip.ip" -> "[root] aws_instance.example01"
+		"[root] aws_eip_association.eip_assoc" -> "[root] aws_eip.ip"
+		"[root] aws_instance.example01" -> "[root] aws_subnet.test01"
+		"[root] aws_instance.example02" -> "[root] aws_subnet.test02"
+		"[root] aws_internet_gateway.gw" -> "[root] aws_vpc.example"
+		"[root] aws_security_group.internal_inbound" -> "[root] aws_vpc.example"
+		"[root] aws_security_group.internal_inbound_mysql" -> "[root] aws_vpc.example"
+		"[root] aws_subnet.test01" -> "[root] aws_internet_gateway.gw"
+		"[root] aws_subnet.test01" -> "[root] var.region"
+		"[root] aws_subnet.test01-rds" -> "[root] aws_internet_gateway.gw"
+		"[root] aws_subnet.test01-rds" -> "[root] data.aws_availability_zones.available"
+		"[root] aws_subnet.test02" -> "[root] aws_internet_gateway.gw"
+		"[root] aws_subnet.test02" -> "[root] var.region"
+		"[root] aws_subnet.test02-rds" -> "[root] aws_internet_gateway.gw"
+		"[root] aws_subnet.test02-rds" -> "[root] data.aws_availability_zones.available"
+		"[root] aws_subnet.test03-rds" -> "[root] aws_internet_gateway.gw"
+		"[root] aws_subnet.test03-rds" -> "[root] data.aws_availability_zones.available"
+		"[root] aws_vpc.example" -> "[root] provider.aws"
+		"[root] data.aws_availability_zones.available" -> "[root] provider.aws"
+		"[root] provider.aws (close)" -> "[root] aws_db_instance.default"
+		"[root] provider.aws (close)" -> "[root] aws_eip_association.eip_assoc"
+		"[root] provider.aws (close)" -> "[root] aws_instance.example02"
+		"[root] provider.aws (close)" -> "[root] aws_security_group.internal_inbound"
+	}
+}
+
